@@ -58,8 +58,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="u-col-md-8">
                 <div class="u-panel">
                     <div class="u-panel-heading">

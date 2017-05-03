@@ -15,17 +15,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="iUAP Design"/>
-    <link rel="stylesheet" href="/public/css/u.css">
-    <link rel="stylesheet" href="/public/css/font-awesome.css">
+    <link rel="stylesheet" href="/public/iuap/css/u.css">
+    <link rel="stylesheet" href="/public/iuap/css/font-awesome.css">
 
     <!--[if (gte IE 9)|!(IE)]><!-->
     <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
     <!--<![endif]-->
     <!--[if lte IE 8 ]>
     <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-    <script src="/public/js/u-polyfill.js"></script>
+    <script src="/public/iuap/js/u-polyfill.js"></script>
     <![endif]-->
-    <script src="/public/js/u.js"></script>
+    <script src="/public/iuap/js/u.js"></script>
 </head>
 <body>
 
