@@ -6,6 +6,14 @@ module.exports = app => {
             yield this.ctx.render('home/index.tpl');
         }
 
+        * login(){
+            yield this.ctx.render('home/login.tpl');
+        }
+
+        * register(){
+            yield this.ctx.render('home/register.tpl')
+        }
+
         * chat() {
             yield this.ctx.render('chat/chat.tpl', {})
         }

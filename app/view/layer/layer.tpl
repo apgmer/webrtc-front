@@ -7,7 +7,7 @@
     <meta name="keywords" content="">
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
-    <title>Chart</title>
+    <title>IChat</title>
 
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
@@ -15,11 +15,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="iUAP Design"/>
+    <link href="http://statics.1024tools.com/css/markdown/github.css" rel="stylesheet" />
     <link rel="stylesheet" href="/public/iuap/css/u.css">
     <link rel="stylesheet" href="/public/iuap/css/font-awesome.css">
-
+    <link rel="stylesheet" href="/public/css/style.css">
     <!--[if (gte IE 9)|!(IE)]><!-->
-    <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/public/jquery/jquery.min.js"></script>
     <!--<![endif]-->
     <!--[if lte IE 8 ]>
     <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
@@ -38,50 +39,22 @@
                 <span class="u-hamburger-bar"></span>
             </button>
 
-            <a class="u-navbar-brand">Brand</a>
+            <a class="u-navbar-brand">IChat</a>
         </div>
         <ul class="nav-list u-navbar-nav hidden-xs">
             <li>
-                <a>
-                    <i class="uf uf-book" aria-hidden="true"></i>
-                </a>
-            </li>
-            <li class="hidden-xs">
-                <a class="uf uf-bell" data-toggle="fullscreen" href="#" role="button">
-                    <!-- <span class="sr-only">Toggle fullscreen</span> -->
-                </a>
-            </li>
-            <li class="hidden-xs">
-                <a class="uf uf-zoom-in" data-toggle="collapse" href="#example-default-search"
-                   role="button">
-                    <!-- <span class="sr-only">Toggle Search</span> -->
+                <a href="/">
+                    首页
                 </a>
             </li>
         </ul>
-        <div class="u-collapse u-navbar-collapse u-navbar-collapse-group"
-             id="example-inverse-collapse">
-            <ul class="nav-list u-navbar-toolbar u-navbar-right u-navbar-toolbar-right">
-                <li class="dropdown">
-                    <a class="u-avatar w-32  u-avatar-online margin-vertical-10 margin-horizontal-15">
-                        <img src="http://design.yyuap.com/static/img/navimg1.jpg" alt="..."
-                             class="img-circle">
-                        <i></i>
-                    </a>
+        <div class="u-collapse u-navbar-collapse u-navbar-collapse-group">
 
-                </li>
-                <li class="dropdown">
-                    <a class="u-badge w-20 m" data-badge="1">
-                        <i class="uf uf-bell"></i>
-                    </a>
-
-                </li>
-                <li class="dropdown">
-                    <a class="u-badge u-badge-info w-20 m" data-badge="3">
-                        <i class="uf uf-mail"></i>
-                    </a>
-
-                </li>
+            <ul class="nav-list u-navbar-toolbar u-navbar-right font-size-14">
+                <li><a href="/login">登陆</a></li>
+                <li><a href="/register">注册</a></li>
             </ul>
+
         </div>
     </div>
 </nav>
