@@ -9,6 +9,8 @@ module.exports = app => {
 
     app.get('/chat', 'home.chat');
 
+    app.post('/login','home.loginAct');
+
     app.io.route('webrtcMsg', app.io.controllers.chat);
 };
 

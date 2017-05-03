@@ -18,17 +18,17 @@
             <img class="brand-img" src="/public/favicon.png" style="width: 50px; height: 50px;" alt="">
             <h2 class="brand-text">IChat-登录</h2>
         </div>
-        <form method="post" action="login.html">
+        <form method="post">
             <div class="form-group form-material floating">
                 <div class="u-text">
-                    <input type="text" class="u-input"/>
+                    <input type="text" name="username" class="u-input"/>
                     <label class="u-label">用户名</label>
                 </div>
             </div>
 
             <div class="form-group form-material floating">
                 <div class="u-text">
-                    <input type="password" class="u-input"/>
+                    <input type="password" name="password" class="u-input"/>
                     <label class="u-label">密码</label>
                 </div>
             </div>
@@ -46,6 +46,15 @@
 
     </div>
 </div>
-
+<script>
+    $('form').submit(function(){
+        let data = $(this).serializeArray();
+        console.log(data);
+        $.post('/login',data,function (res) {
+            
+        });
+        return false;
+    })
+</script>
 </body>
 </html>
