@@ -70,4 +70,15 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+    <script>
+        const socket = io.connect('http://localhost:7001');
+        console.log(socket);
+        socket.on('connect',function () {
+            socket.emit('chat',"helloworld");
+            socket.on('res',function (res) {
+                console.log(res)
+            })
+        })
+    </script>
 {% endblock %}
