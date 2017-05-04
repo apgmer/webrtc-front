@@ -22,8 +22,7 @@ module.exports = app => {
             const ctx = this.ctx;
             let username = ctx.request.body.username;
             let pass = ctx.request.body.password;
-            const userInfo = yield ctx.service.user.find(username);
-            console.log(username);
+            const userInfo = yield ctx.service.user.find(username,pass);
             ctx.body = userInfo;
             // ctx.body = {
             //     success : true

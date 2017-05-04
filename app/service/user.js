@@ -34,10 +34,12 @@
 
 module.exports = app => {
     class User extends app.Service{
-        * find(username){
-            console.log(username);
+        * find(username,pass){
             const result = yield this.ctx.curl(`https://www.easy-mock.com/mock/5905c8817a878d73716e2bdb/example/user/login`,{dataType:'json'});
-            console.log(result.success);
+            console.log(typeof result.data);
+            if (result.data.success){
+                let userInfo = result.data.data[0];
+            }
             return result.data;
         }
     }
