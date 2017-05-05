@@ -19,10 +19,10 @@
                         <ul class="u-list-group">
 
                             <li class="u-list-group-item">
-                                <form action="">
+                                <form action="" id="searchform">
                                     <div class="form-group form-material floating">
                                         <div class="u-text">
-                                            <input type="text" name="search" class="u-input" placeholder="搜索"/>
+                                            <input type="text" name="search" id="searchKey" class="u-input" placeholder="搜索"/>
                                         </div>
                                     </div>
                                 </form>
@@ -72,6 +72,72 @@
             </div>
         </div>
     </div>
+    <script>
+        var showUserListDialog = function (data) {
+            window.userListDialog = u.messageDialog({
+                msg: data,
+                title: "搜索结果",
+                onOk: function () {
+                }
+            });
+            $(window.userListDialog.contentDom).parents('.u-msg-dialog').css('width','auto')
+        }
+        var closeUserListDialog = function () {
+            window.userListDialog.close();
+        }
+
+        var showMsg = function (msg) {
+            window.msgDialog = u.messageDialog({
+                msg:msg,
+                title: "提示",
+            })
+        }
+        var closeMsg = function () {
+            window.msgDialog.close();
+        }
+        var addFriend = function (userid) {
+            console.log(userid)
+            $.get("/friend/addfriendreq",{friendid:userid},function (res) {
+                if (res.success){
+                    closeUserListDialog();
+                    showMsg("已发送申请")
+                }else{
+                    alert("操作失败")
+                }
+            })
+        }
+        $(function () {
+            $('#searchform').submit(function () {
+
+                $.get('/friend/search',{name:$('#searchKey').val()},function (res) {
+                    console.log(res)
+
+                    let tableData = '';
+                    for(let i = 0 ; i<res.length ; i ++){
+                        tableData += '<tr>' +
+                            '<td>'+res[i].userinfo.name+'</td>' +
+                            '<td>'+res[i].status+'</td>' +
+                            '<td><a href="javascript:;" onclick="addFriend(\''+res[i].userinfo.id+'\')">添加好友</a></td>' +
+                            '</tr>'
+                    }
+
+                    let table = '<table class="u-table-base u-table-hover">' +
+                        '<tr>' +
+                        '<td>用户名</td>' +
+                        '<td>在线状态</td>' +
+                        '<td>操作</td>' +
+                        '</tr>' +
+                        tableData +
+                        '</table>'
+
+                    showUserListDialog(table);
+
+                })
+
+                return false;
+            })
+        })
+    </script>
     {#<script src="/public/socketio/socket.io-1.2.1.js"></script>#}
     {#<script src="/public/js/chat.js"></script>#}
 {% endblock %}

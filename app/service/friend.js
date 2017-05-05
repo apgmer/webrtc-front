@@ -11,12 +11,39 @@ module.exports = app => {
         }
 
         * findFriendByUid(uid){
-            const res = yield this.friendRequest("/friend/getfriends?uid="+uid)
+            const res = yield this.friendRequest("friend/getfriends?uid="+uid)
             if (res.success){
                 return res.data;
             }else{
                 return null;
             }
+        }
+
+        * friendSearch(name){
+            const res = yield this.friendRequest('user/search?name='+name);
+            if (res.success){
+                return res.data;
+            }else{
+                return null;
+            }
+        }
+
+        /**
+         * 发送添加好友请求
+         * @param nowuid 当前用户id
+         * @param friendid 好友id
+         * @returns {null}
+         */
+        * addFriendReq(nowuid,friendid){
+            if (nowuid === friendid) return null;
+            const res = yield this.friendRequest('friend/addReq',{
+                method:'POST',
+                data:{
+                    srcId:nowuid,
+                    desId:friendid
+                }
+            })
+            return res.success;
         }
 
         * friendRequest(api,opts){
