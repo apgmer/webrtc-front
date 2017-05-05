@@ -4,10 +4,13 @@ module.exports = app => {
     class HomeController extends app.Controller {
 
         * index() {
-            yield this.ctx.render('home/index.tpl');
+            yield this.ctx.render('home/index.tpl', {isLogin: !!(this.ctx.session.user)});
         }
 
         * login() {
+            if(this.ctx.session.user){
+                this.ctx.redirect('/chat');
+            }
             yield this.ctx.render('home/login.tpl');
         }
 
@@ -48,7 +51,7 @@ module.exports = app => {
             }
         }
 
-        * logout(){
+        * logout() {
             this.ctx.session = null;
             this.ctx.redirect('/');
         }

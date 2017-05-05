@@ -15,7 +15,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="iUAP Design"/>
-    <link href="http://statics.1024tools.com/css/markdown/github.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="/public/iuap/css/u.css">
     <link rel="stylesheet" href="/public/iuap/css/font-awesome.css">
     <link rel="stylesheet" href="/public/css/style.css">
@@ -51,8 +51,12 @@
         <div class="u-collapse u-navbar-collapse u-navbar-collapse-group">
 
             <ul class="nav-list u-navbar-toolbar u-navbar-right font-size-14">
-                <li><a href="/login">登陆</a></li>
-                <li><a href="/register">注册</a></li>
+                {% if isLogin %}
+                    <li><a href="/logout">退出</a></li>
+                {% else %}
+                    <li><a href="/login">登陆</a></li>
+                    <li><a href="/register">注册</a></li>
+                {% endif %}
             </ul>
 
         </div>

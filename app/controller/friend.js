@@ -4,9 +4,8 @@
 
 module.exports = app => {
     class FriendController extends app.Controller{
-        constructor(ctx){
-            super(ctx)
-        }
+
+
     }
 
     return FriendController;

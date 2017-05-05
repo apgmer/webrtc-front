@@ -8,8 +8,7 @@
         }
     </style>
     <div class="u-container">
-        <div class="row">
-
+        <div class="u-row">
 
             <div class="u-col-md-4">
                 <div class="u-panel">
@@ -18,46 +17,45 @@
                     </div>
                     <div class="u-panel-body">
                         <ul class="u-list-group">
-                            <li class="u-list-group-item">
 
-                                <div class="u-media">
-                                    <div class="u-media-left">
-                                        <a href="#">
-                                            <img class="u-media-object"
-                                                 src="http://design.yyuap.com/static/img/navimg1.jpg"
-                                                 style="width: 50px;height: 50px;">
-                                        </a>
-                                    </div>
-                                    <div class="u-media-body">
-                                        <div class="u-media-heading">郭晓天 <span class="pull-right" style="color: green;">在线</span></div>
-                                        <div>
-                                            <button class="u-button u-button-primary u-button-sm" id="callBtn">
-                                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                            </button>
+                            <li class="u-list-group-item">
+                                <form action="">
+                                    <div class="form-group form-material floating">
+                                        <div class="u-text">
+                                            <input type="text" name="search" class="u-input" placeholder="搜索"/>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
+                            </li>
 
-                            </li>
-                            <li class="u-list-group-item">
-                                <div class="u-media">
-                                    <div class="u-media-left">
-                                        <a href="#">
-                                            <img class="u-media-object"
-                                                 src="http://design.yyuap.com/static/img/navimg1.jpg"
-                                                 style="width: 50px;height: 50px;">
-                                        </a>
+                            {% for friend in friends %}
+                                <li class="u-list-group-item">
+                                    <div class="friend">
+                                        <span style="font-size: 25px;">{{ friend.userinfo.name }}</span>
+
+                                        {% if friend.status == 'ONLINE' %}
+                                            <span style="padding-top: 10px" class="u-right"> 在线
+                                                <i style="color: #70da4f" class="fa fa-lightbulb-o fa-2x" aria-hidden="true"></i>
+                                            </span>
+
+                                        {% else %}
+                                            <span style="padding-top: 10px" class="u-right"> 离线
+                                                <i style="color: #7e7f80;" class="fa fa-lightbulb-o fa-2x" aria-hidden="true"></i>
+                                            </span>
+                                        {% endif %}
+
                                     </div>
-                                    <div class="u-media-body">
-                                        <div class="u-media-heading">郭晓天 <span class="pull-right">离线</span></div>
-                                        <div>
-                                            <button class="u-button u-button-primary u-button-sm">
-                                                <i class="fa fa-phone" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
+                                    <div class="act">
+                                        <button class="u-button u-button-primary u-button-sm" {% if friend.status == 'OFFLINE' %} disabled="disabled" {% endif %} >
+                                            <i class="fa fa-phone" aria-hidden="true"></i>
+                                        </button>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
+
+                            {% else %}
+                                <li class="u-list-group-item">还未添加好友，请添加</li>
+                            {% endfor %}
+
                         </ul>
 
                     </div>
@@ -69,26 +67,11 @@
                         <p class="u-panel-title">与 郭晓天 聊天</p>
                     </div>
                     <div class="u-panel-body">
-                        <input type="text" id="namein"> <button id="login">login</button>
-                        <div id = "callPage" class = "call-page">
-                            <video id = "localVideo" autoplay></video>
-                            <video id = "remoteVideo" autoplay></video>
-
-                            <div class = "row text-center">
-                                <div class = "col-md-12">
-                                    <input id = "callToUsernameInput" type = "text"
-                                           placeholder = "username to call" />
-                                    <button id = "callBtn" class = "btn-success btn">Call</button>
-                                    <button id = "hangUpBtn" class = "btn-danger btn">Hang Up</button>
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="/public/socketio/socket.io-1.2.1.js"></script>
-    <script src="/public/js/chat.js"></script>
+    {#<script src="/public/socketio/socket.io-1.2.1.js"></script>#}
+    {#<script src="/public/js/chat.js"></script>#}
 {% endblock %}

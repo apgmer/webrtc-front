@@ -6,10 +6,12 @@ module.exports = app => {
     class ChatController extends app.Controller{
 
         * showChatView(){
-            if(!this.ctx.session.user){
-                this.ctx.redirect("/");
+            const ctx = this.ctx;
+            if(!ctx.session.user){
+                ctx.redirect("/");
             }else{
-                yield this.ctx.render('chat/chat.tpl', {})
+                const friendList = yield ctx.service.friend.findFriendByUid(ctx.session.user.id);
+                yield ctx.render('chat/chat.tpl', {isLogin:true,friends:friendList})
             }
         }
     }
