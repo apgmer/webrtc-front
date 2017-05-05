@@ -51,7 +51,12 @@
         let data = $(this).serializeArray();
         console.log(data);
         $.post('/login',data,function (res) {
-            
+            if (res.success){
+                window.location.href = '/chat';
+            }else{
+                alert('用户名密码错误，请重试');
+                window.location.reload();
+            }
         });
         return false;
     })

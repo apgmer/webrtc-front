@@ -2,31 +2,55 @@
 
 module.exports = app => {
     class HomeController extends app.Controller {
+
         * index() {
             yield this.ctx.render('home/index.tpl');
         }
 
-        * login(){
+        * login() {
             yield this.ctx.render('home/login.tpl');
         }
 
-        * register(){
+        * register() {
             yield this.ctx.render('home/register.tpl')
         }
 
-        * chat() {
-            yield this.ctx.render('chat/chat.tpl', {})
-        }
-
-        * loginAct(){
+        * loginAct() {
             const ctx = this.ctx;
             let username = ctx.request.body.username;
             let pass = ctx.request.body.password;
-            const userInfo = yield ctx.service.user.find(username,pass);
-            ctx.body = userInfo;
-            // ctx.body = {
-            //     success : true
-            // }
+            const userInfo = yield ctx.service.user.find(username, pass);
+            if (null !== userInfo) {
+                ctx.session.user = userInfo;
+                ctx.body = {
+                    success: true
+                }
+            } else {
+                ctx.body = {
+                    success: false
+                }
+            }
+        }
+
+        * registerAct() {
+            const ctx = this.ctx;
+            let name = ctx.request.body.username;
+            let pass = ctx.request.body.password;
+            const userInfo = yield ctx.service.user.reguser(name, pass);
+            if (null !== userInfo) {
+                ctx.body = {
+                    success: true
+                }
+            } else {
+                ctx.body = {
+                    success: false
+                }
+            }
+        }
+
+        * logout(){
+            this.ctx.session = null;
+            this.ctx.redirect('/');
         }
     }
     return HomeController;

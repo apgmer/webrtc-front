@@ -23,6 +23,10 @@ module.exports = appInfo => {
         }
     };
 
+    config.serverUrl = 'http://127.0.0.1:8080/api';
+
+    // config.middleware = ['userAuth'];
+
     return config;
 };
 
