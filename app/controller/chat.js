@@ -23,12 +23,10 @@ module.exports = app => {
 
         * showNotifyView() {
             const ctx = this.ctx;
-            console.log("now user" + ctx.session.user.id)
             if (!ctx.session.user) {
                 ctx.redirect("/")
             } else {
                 const notifies = yield ctx.service.friend.findNotifiesDetail(ctx.session.user.id)
-                console.log(notifies);
                 yield ctx.render('home/notify.tpl', {
                     notifies: notifies,
                     isLogin: true

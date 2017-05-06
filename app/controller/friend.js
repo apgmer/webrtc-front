@@ -39,9 +39,14 @@ module.exports = app => {
                 let friendid = ctx.query.friendid;
                 let nowFriendArr = ctx.session.user.friends;
                 let flag = false;
-                if (nowFriendArr.indexOf(friendid) === -1) {
+                if (nowFriendArr !== null) {
+                    if (nowFriendArr.indexOf(friendid) === -1) {
+                        flag = yield ctx.service.friend.addFriendReq(ctx.session.user.id, friendid);
+                    }
+                } else {
                     flag = yield ctx.service.friend.addFriendReq(ctx.session.user.id, friendid);
                 }
+
                 ctx.body = {
                     success: flag
                 }

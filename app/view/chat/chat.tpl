@@ -140,6 +140,6 @@
             })
         })
     </script>
-    {#<script src="/public/socketio/socket.io-1.2.1.js"></script>#}
+    <script src="/public/socketio/socket.io-1.2.1.js"></script>
     {#<script src="/public/js/chat.js"></script>#}
 {% endblock %}
