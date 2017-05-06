@@ -39,7 +39,7 @@ module.exports = app => {
                 let friendid = ctx.query.friendid;
                 let nowFriendArr = ctx.session.user.friends;
                 let flag = false;
-                if(nowFriendArr.indexOf(friendid) === -1) {
+                if (nowFriendArr.indexOf(friendid) === -1) {
                     flag = yield ctx.service.friend.addFriendReq(ctx.session.user.id, friendid);
                 }
                 ctx.body = {
@@ -59,6 +59,22 @@ module.exports = app => {
                 let msgid = ctx.query.msgid;
                 let status = ctx.query.status;
                 const flag = yield ctx.service.friend.dealRecvMsg(msgid, status)
+                ctx.body = {
+                    success: flag
+                }
+            }
+        }
+
+        /**
+         * 将消息状态改为完成
+         */
+        * doneNotify() {
+            const ctx = this.ctx;
+            if (!ctx.session.user) {
+                ctx.status = 403;
+            } else {
+                let msgid = ctx.query.msgid;
+                const flag = yield ctx.service.friend.doneMsg(msgid, ctx.session.user.id)
                 ctx.body = {
                     success: flag
                 }

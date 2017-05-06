@@ -121,8 +121,18 @@ module.exports = app => {
                     id: msgid,
                     status: status
                 },
-                method:'POST'
+                method: 'POST'
             })
+            return res.success;
+        }
+
+        /**
+         * 将消息状态改为完成
+         * @param msgid
+         * @param uid
+         */
+        * doneMsg(msgid, uid) {
+            const res = yield this.friendRequest('friend/setNotifyDone?uid=' + uid + '&msgid=' + msgid);
             return res.success;
         }
 

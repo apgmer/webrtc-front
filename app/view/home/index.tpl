@@ -1,7 +1,7 @@
 {% extends "../layer/layer.tpl" %}
 
 {% block content %}
-    <link href="http://statics.1024tools.com/css/markdown/github.css" rel="stylesheet" />
+    <link href="/public/css/github.css" rel="stylesheet" />
     <div class="jumbotron promo">
         <img alt="Magnoliyan Video Chat PRO" src="/public/imgs/video-chat-pro.png">
         <div>

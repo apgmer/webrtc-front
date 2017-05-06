@@ -16,6 +16,7 @@ module.exports = app => {
     app.get('/friend/search', 'friend.friendSearch');
     app.get('/friend/addfriendreq', 'friend.addFriendReq'); //发送好友申请请求
     app.get('/friend/dealNotify', 'friend.dealNotify');
+    app.get('/friend/doneNotify','friend.doneNotify');
 
     app.io.route('webrtcMsg', app.io.controllers.chat);
 };

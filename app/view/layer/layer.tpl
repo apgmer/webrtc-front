@@ -52,6 +52,7 @@
 
             <ul class="nav-list u-navbar-toolbar u-navbar-right font-size-14">
                 {% if isLogin %}
+                    <li><a href="/chat">开始聊天</a></li>
                     <li><a href="/logout">退出</a></li>
                     <li><a href="/notify"><i class="uf uf-bell"></i></a></li>
                 {% else %}

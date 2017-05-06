@@ -14,11 +14,15 @@
                             <li class="u-list-group-item"><h2>发起的通知</h2></li>
                             {% for send in notifies.sendList %}
                                 <li class="u-list-group-item">
-                                    请求加 {{ send.userinfo.name }} 好友， 当前状态
-                                    {% if send.status == 'SEEDING' %} 等待接受
-                                    {% elseif send.status == 'REJECT' %} 拒绝
-                                    {% elseif send.status == 'ACCEPT' %} 接受
-                                    {% endif %}
+                                    <div style="font-size: 15px;">
+                                        请求加 {{ send.userinfo.name }} 好友， 当前状态
+                                        {% if send.status == 'SEEDING' %} 等待接受
+                                        {% elseif send.status == 'REJECT' %} 拒绝
+                                        {% elseif send.status == 'ACCEPT' %} 接受
+                                        {% endif %}
+                                        <a href="javascript:;" class="pull-right u-button u-button-primary u-button-sm"
+                                           onclick="doneMsg('{{ send.id }}')">完成</a>
+                                    </div>
                                 </li>
                             {% else %}
                                 <li class="u-list-group-item">无通知</li>
@@ -58,9 +62,20 @@
                 msgid: msgid,
                 status: status
             }, function (res) {
-                if (res.success){
-                    alert('发送成功')
+                if (res.success) {
+                    alert('发送成功');
+                    window.location.reload()
                 }
+            })
+        }
+        var doneMsg = function (msgid) {
+            $.get('/friend/doneNotify?msgid=' + msgid, function (res) {
+                if (res.success) {
+                    alert('操作成功')
+                } else {
+                    alert('操作失败')
+                }
+                window.location.reload();
             })
         }
     </script>
