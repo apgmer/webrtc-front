@@ -10,6 +10,11 @@ module.exports = app => {
             this.serverUrl = this.config.serverUrl;
         }
 
+        /**
+         * 根据当前用户 查找朋友
+         * @param uid
+         * @returns {null}
+         */
         * findFriendByUid(uid){
             const res = yield this.friendRequest("friend/getfriends?uid="+uid)
             if (res.success){
@@ -19,6 +24,12 @@ module.exports = app => {
             }
         }
 
+
+        /**
+         * 用户搜索
+         * @param name
+         * @returns {null}
+         */
         * friendSearch(name){
             const res = yield this.friendRequest('user/search?name='+name);
             if (res.success){
@@ -44,6 +55,35 @@ module.exports = app => {
                 }
             })
             return res.success;
+        }
+
+
+        /**
+         * 查询收到的通知
+         * @param uid
+         * @returns {null}
+         */
+        * findRecvNotify(uid){
+            const res = yield this.friendRequest('friend/getfriendmsg?uid='+uid);
+            if (res.success){
+                return res.data;
+            }else{
+                return null;
+            }
+        }
+
+        /**
+         * 查询自己发送的通知
+         * @param uid
+         * @returns {null}
+         */
+        * findSendNotify(uid){
+            const res = yield this.friendRequest('friend/getNotify?uid='+uid);
+            if(res.success){
+                return res.data;
+            }else{
+                return null;
+            }
         }
 
         * friendRequest(api,opts){

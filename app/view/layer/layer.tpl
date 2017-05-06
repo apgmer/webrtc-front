@@ -53,6 +53,11 @@
             <ul class="nav-list u-navbar-toolbar u-navbar-right font-size-14">
                 {% if isLogin %}
                     <li><a href="/logout">退出</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-button u-badge w-20 m" data-badge="{{ notifyCount }}" id="notifyNum">
+                            <span><i class="uf uf-bell"></i></span>
+                        </a>
+                    </li>
                 {% else %}
                     <li><a href="/login">登陆</a></li>
                     <li><a href="/register">注册</a></li>
