@@ -12,15 +12,26 @@ module.exports = app => {
             } else {
                 const uid = ctx.session.user.id;
                 const friendList = yield ctx.service.friend.findFriendByUid(uid);
-                const sendNotifyList = yield ctx.service.friend.findSendNotify(uid);
-                const recvNotifyList = yield ctx.service.friend.findRecvNotify(uid);
                 yield ctx.render('chat/chat.tpl', {
                     isLogin: true,
-                    friends: friendList,
-                    sendNotifys: sendNotifyList,
-                    recvNotifys: recvNotifyList,
-                    notifyCount: (sendNotifyList === null ? 0 : sendNotifyList.length)
-                    + (recvNotifyList === null ? 0 : recvNotifyList.length)
+                    friends: friendList
+                    // sendNotifys: sendNotifyList,
+                    // recvNotifys: recvNotifyList,
+                })
+            }
+        }
+
+        * showNotifyView() {
+            const ctx = this.ctx;
+            console.log("now user" + ctx.session.user.id)
+            if (!ctx.session.user) {
+                ctx.redirect("/")
+            } else {
+                const notifies = yield ctx.service.friend.findNotifiesDetail(ctx.session.user.id)
+                console.log(notifies);
+                yield ctx.render('home/notify.tpl', {
+                    notifies: notifies,
+                    isLogin: true
                 })
             }
         }

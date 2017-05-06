@@ -74,6 +74,9 @@
     </div>
     <script>
         var showUserListDialog = function (data) {
+            if(window.userListDialog){
+                return false;
+            }
             window.userListDialog = u.messageDialog({
                 msg: data,
                 title: "搜索结果",
@@ -84,6 +87,7 @@
         }
         var closeUserListDialog = function () {
             window.userListDialog.close();
+            window.userListDialog = null;
         }
 
         var showMsg = function (msg) {
@@ -102,7 +106,7 @@
                     closeUserListDialog();
                     showMsg("已发送申请")
                 }else{
-                    alert("操作失败")
+                    alert("操作失败,可能已经是您的好友了")
                 }
             })
         }
@@ -110,8 +114,6 @@
             $('#searchform').submit(function () {
 
                 $.get('/friend/search',{name:$('#searchKey').val()},function (res) {
-                    console.log(res)
-
                     let tableData = '';
                     for(let i = 0 ; i<res.length ; i ++){
                         tableData += '<tr>' +

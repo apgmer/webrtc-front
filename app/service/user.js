@@ -26,7 +26,20 @@ module.exports = app => {
             return userInfo;
         }
 
-        * reguser(name,pass){
+        * findUserById(uid) {
+            const opt = {
+                contentType: 'JSON'
+            }
+            const res = yield this.userRequest("/user/findById?uid=" + uid);
+            if (res.success){
+                return res.data;
+            }else{
+                return null;
+            }
+
+        }
+
+        * reguser(name, pass) {
             const opt = {
                 method: 'POST',
                 contentType: 'json',
@@ -35,9 +48,9 @@ module.exports = app => {
                     pass: pass
                 }
             };
-            const res = yield this.userRequest("/register",opt);
+            const res = yield this.userRequest("/register", opt);
             let userInfo = null;
-            if (res.success){
+            if (res.success) {
                 userInfo = res.data[0];
             }
             return userInfo;

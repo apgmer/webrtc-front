@@ -4,8 +4,8 @@
 
 module.exports = app => {
 
-    class Friend extends app.Service{
-        constructor(ctx){
+    class Friend extends app.Service {
+        constructor(ctx) {
             super(ctx);
             this.serverUrl = this.config.serverUrl;
         }
@@ -15,11 +15,11 @@ module.exports = app => {
          * @param uid
          * @returns {null}
          */
-        * findFriendByUid(uid){
-            const res = yield this.friendRequest("friend/getfriends?uid="+uid)
-            if (res.success){
+        * findFriendByUid(uid) {
+            const res = yield this.friendRequest("friend/getfriends?uid=" + uid)
+            if (res.success) {
                 return res.data;
-            }else{
+            } else {
                 return null;
             }
         }
@@ -30,11 +30,11 @@ module.exports = app => {
          * @param name
          * @returns {null}
          */
-        * friendSearch(name){
-            const res = yield this.friendRequest('user/search?name='+name);
-            if (res.success){
+        * friendSearch(name) {
+            const res = yield this.friendRequest('user/search?name=' + name);
+            if (res.success) {
                 return res.data;
-            }else{
+            } else {
                 return null;
             }
         }
@@ -45,13 +45,13 @@ module.exports = app => {
          * @param friendid 好友id
          * @returns {null}
          */
-        * addFriendReq(nowuid,friendid){
+        * addFriendReq(nowuid, friendid) {
             if (nowuid === friendid) return null;
-            const res = yield this.friendRequest('friend/addReq',{
-                method:'POST',
-                data:{
-                    srcId:nowuid,
-                    desId:friendid
+            const res = yield this.friendRequest('friend/addReq', {
+                method: 'POST',
+                data: {
+                    srcId: nowuid,
+                    desId: friendid
                 }
             })
             return res.success;
@@ -63,12 +63,36 @@ module.exports = app => {
          * @param uid
          * @returns {null}
          */
-        * findRecvNotify(uid){
-            const res = yield this.friendRequest('friend/getfriendmsg?uid='+uid);
-            if (res.success){
-                return res.data;
-            }else{
+        * findRecvNotify(uid) {
+            const res = yield this.friendRequest('friend/getfriendmsg?uid=' + uid);
+            if (res.success) {
+                return res.data.length === 0 ? null : res.data;
+            } else {
                 return null;
+            }
+        }
+
+        /**
+         * 查询当前用户的所有通知
+         * @param uid
+         * @returns {{recvList: *, sendList: *}}
+         */
+        * findNotifiesDetail(uid) {
+            const recvList = yield this.findRecvNotify(uid);
+            const sendList = yield this.findSendNotify(uid)
+            if (recvList !== null) {
+                for (let i = 0; i < recvList.length; i++) {
+                    recvList[i].userinfo = yield this.ctx.service.user.findUserById(recvList[i].srcId);
+                }
+            }
+            if (sendList !== null) {
+                for (let i = 0; i < sendList.length; i++) {
+                    sendList[i].userinfo = yield this.ctx.service.user.findUserById(sendList[i].desId)
+                }
+            }
+            return {
+                recvList: recvList,
+                sendList: sendList
             }
         }
 
@@ -77,18 +101,34 @@ module.exports = app => {
          * @param uid
          * @returns {null}
          */
-        * findSendNotify(uid){
-            const res = yield this.friendRequest('friend/getNotify?uid='+uid);
-            if(res.success){
-                return res.data;
-            }else{
+        * findSendNotify(uid) {
+            const res = yield this.friendRequest('friend/getNotify?uid=' + uid);
+            if (res.success) {
+                return res.data.length === 0 ? null : res.data;
+            } else {
                 return null;
             }
         }
 
-        * friendRequest(api,opts){
+        /**
+         * 处理接受到的请求
+         * @param msgid 请求id
+         * @param status 处理结果
+         */
+        * dealRecvMsg(msgid, status) {
+            const res = yield this.friendRequest('friend/dealfriendmsg', {
+                data: {
+                    id: msgid,
+                    status: status
+                },
+                method:'POST'
+            })
+            return res.success;
+        }
+
+        * friendRequest(api, opts) {
             const options = Object.assign({
-                contentType:'json',
+                contentType: 'json',
                 dataType: 'json',
                 timeout: ['30s', '30s'],
             }, opts);
