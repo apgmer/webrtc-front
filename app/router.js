@@ -7,6 +7,9 @@ module.exports = app => {
     app.get('/register', 'home.register');
     app.get('/chat', 'chat.showChatView');
     app.get('/logout', 'home.logout');
+    app.get('/keeponline','home.keepOnline')
+
+    app.get('/getLoginUser','home.getLoginUser')
 
     app.get('/notify', 'chat.showNotifyView');
 

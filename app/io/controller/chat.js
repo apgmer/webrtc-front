@@ -25,6 +25,7 @@ module.exports = () => {
                     type:"login",
                     success:true
                 };
+                console.log(data)
                 socket.webrtcname = data.name;
                 _sockets[data.name] = socket;
                 socket.emit('webrtcMsg',JSON.stringify(d));

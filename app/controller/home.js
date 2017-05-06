@@ -8,7 +8,7 @@ module.exports = app => {
         }
 
         * login() {
-            if(this.ctx.session.user){
+            if (this.ctx.session.user) {
                 this.ctx.redirect('/chat');
             }
             yield this.ctx.render('home/login.tpl');
@@ -32,6 +32,25 @@ module.exports = app => {
                 ctx.body = {
                     success: false
                 }
+            }
+        }
+
+        * keepOnline() {
+            const ctx = this.ctx;
+            if (!ctx.session.user) {
+                ctx.status = 403;
+            } else {
+                const flag = yield ctx.service.user.keepOnline(ctx.session.user.id)
+                ctx.body = {success: flag}
+            }
+        }
+
+        * getLoginUser(){
+            const ctx = this.ctx;
+            if (!ctx.session.user) {
+                ctx.status = 403;
+            } else {
+                ctx.body = ctx.session.user;
             }
         }
 

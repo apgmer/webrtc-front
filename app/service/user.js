@@ -31,9 +31,9 @@ module.exports = app => {
                 contentType: 'JSON'
             }
             const res = yield this.userRequest("/user/findById?uid=" + uid);
-            if (res.success){
+            if (res.success) {
                 return res.data;
-            }else{
+            } else {
                 return null;
             }
 
@@ -55,6 +55,13 @@ module.exports = app => {
             }
             return userInfo;
         };
+
+        * keepOnline(uid) {
+            const res = yield this.userRequest('/user/keepOnline?uid=' + uid, {
+                contentType: 'JSON'
+            })
+            return res.success;
+        }
 
         * userRequest(api, opts) {
             const options = Object.assign({
