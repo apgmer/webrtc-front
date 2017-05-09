@@ -7,12 +7,14 @@ navigator.getUserMedia = navigator.getUserMedia ||
 window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
 window.RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription;
 window.RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate || window.webkitRTCIceCandidate;
-
+var audio = new Audio('/public/mp3/bell.mp3');
+// audio.play();
 
 let yourConn;
 let stream;
 let connectedUser;
 let isLogin = false;
+let isCallTo = false;
 // let callBtn = document.querySelector('#callBtn');
 let localVideo = document.querySelector('#localVideo');
 let remoteVideo = document.querySelector('#remoteVideo');
@@ -28,7 +30,6 @@ socket.on('connect', function () {
             name: window.userInfo.id
         });
     })
-
 
 });
 
@@ -59,6 +60,7 @@ socket.on('webrtcMsg', function (data) {
 });
 
 let callTo = function (friendid) {
+    isCallTo = true;
 
     // 将自己的摄像头显示在屏幕上
     handleLogin(isLogin, function (isDone) {
@@ -90,7 +92,7 @@ let callTo = function (friendid) {
 }
 
 var constraints = window.constraints = {
-    audio: true,
+    audio: false,
     video: true
 };
 
@@ -107,7 +109,7 @@ let handleLogin = function (success, callback) {
         // navigator.getUserMedia({video: true, audio: true}, function (myStream) {
         navigator.getUserMedia(constraints, function (myStream) {
 
-        // navigator.getUserMedia(constraints, function (myStream) {
+            // navigator.getUserMedia(constraints, function (myStream) {
             stream = myStream;
 
             //displaying local video stream on the page
@@ -184,32 +186,41 @@ let handleLogin = function (success, callback) {
 
 //when somebody sends us an offer
 let handleOffer = function (offer, name) {
-    console.log("exe handleOffer")
-    console.log(isLogin)
-    handleLogin(isLogin, function (isDone) {
-        console.log("isDone" + isDone)
-        if (isDone) {
 
-            connectedUser = name;
-            yourConn.setRemoteDescription(new RTCSessionDescription(offer));
+    if (!isCallTo){
+        audio.play();
+        layer.confirm('您的好友请求与您视频通话，是否接受', function(index){
+            audio.pause()
+            layer.close(index);
 
-            //create an answer to an offer
-            yourConn.createAnswer(function (answer) {
-                yourConn.setLocalDescription(answer);
-                console.log('send answer')
-                send({
-                    type: "answer",
-                    answer: answer
-                });
+            handleLogin(isLogin, function (isDone) {
+                console.log("isDone" + isDone)
+                if (isDone) {
+
+                    connectedUser = name;
+                    yourConn.setRemoteDescription(new RTCSessionDescription(offer));
+
+                    //create an answer to an offer
+                    yourConn.createAnswer(function (answer) {
+                        yourConn.setLocalDescription(answer);
+                        console.log('send answer')
+                        send({
+                            type: "answer",
+                            answer: answer
+                        });
 
 
-            }, function (error) {
-                console.log(error);
-                alert("Error when creating an answer");
-            });
+                    }, function (error) {
+                        console.log(error);
+                        alert("Error when creating an answer");
+                    });
 
-        }
-    })
+                }
+            })
+        });
+    }
+
+
 
 };
 

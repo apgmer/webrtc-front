@@ -7,6 +7,8 @@
             border: 1px solid gray;
         }
     </style>
+    <link rel="stylesheet" href="/public/layer/skin/default/layer.css">
+    <script src="/public/layer/layer.js"></script>
     <div class="u-container">
         <div class="u-row">
 
@@ -90,7 +92,7 @@
                     <div class="u-panel-body">
                         <div class="videos">
                             <video id="remoteVideo" class="remoteVideo" autoplay></video>
-                            <video id="localVideo" class="localVideo" autoplay></video>
+                            <video id="localVideo" class="localVideo" autoplay style="max-height: 412px;"></video>
                         </div>
 
                     </div>
@@ -165,7 +167,7 @@
 
             setInterval(function () {
                 $.get('/keeponline')
-            }, 1000)
+            }, 10000)
 
         })
     </script>
