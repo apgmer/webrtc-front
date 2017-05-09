@@ -17,7 +17,8 @@ let isLogin = false;
 let localVideo = document.querySelector('#localVideo');
 let remoteVideo = document.querySelector('#remoteVideo');
 
-const socket = io.connect('http://192.168.1.103:7001');
+const socket = io.connect('http://192.168.1.103');
+console.log(socket)
 socket.on('connect', function () {
 
     $.get('/getLoginUser', function (userInfo) {
@@ -88,6 +89,11 @@ let callTo = function (friendid) {
 
 }
 
+var constraints = window.constraints = {
+    audio: true,
+    video: true
+};
+
 let handleLogin = function (success, callback) {
     if (!success) {
         alert('登陆失败');
@@ -98,18 +104,22 @@ let handleLogin = function (success, callback) {
 
         //getting local video stream
         // navigator.webkitGetUserMedia({ video: true, audio: true }, function (myStream) {
-        navigator.getUserMedia({video: true, audio: false}, function (myStream) {
+        // navigator.getUserMedia({video: true, audio: true}, function (myStream) {
+        navigator.getUserMedia(constraints, function (myStream) {
+
+        // navigator.getUserMedia(constraints, function (myStream) {
             stream = myStream;
 
             //displaying local video stream on the page
             localVideo.src = window.URL.createObjectURL(stream);
 
-            console.log(stream)
-            console.log()
 
             //using Google public stun server
             let configuration = {
-                "iceServers": [{"url": "turn:112.74.57.118:3478", "username": "username1", "credential": "password1"}]
+                // "iceServers": [{"url": "turn:112.74.57.118:3478", "username": "username1", "credential": "password1"}]
+                "iceServers": [
+                    {"url":'stun:stun.ekiga.net'}
+                ]
             };
 
             // iceServer => {

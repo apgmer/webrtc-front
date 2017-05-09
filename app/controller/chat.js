@@ -21,6 +21,7 @@ module.exports = app => {
             }
         }
 
+
         * showNotifyView() {
             const ctx = this.ctx;
             if (!ctx.session.user) {

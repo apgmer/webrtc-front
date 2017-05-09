@@ -89,8 +89,8 @@
                     </div>
                     <div class="u-panel-body">
                         <div class="videos">
-                            <video id="remoteVideo" class="remoteVideo"></video>
-                            <video id="localVideo" class="localVideo"></video>
+                            <video id="remoteVideo" class="remoteVideo" autoplay></video>
+                            <video id="localVideo" class="localVideo" autoplay></video>
                         </div>
 
                     </div>
@@ -165,7 +165,7 @@
 
             setInterval(function () {
                 $.get('/keeponline')
-            }, 100000)
+            }, 1000)
 
         })
     </script>
