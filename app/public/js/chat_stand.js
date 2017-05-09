@@ -16,8 +16,8 @@ let connectedUser;
 let isLogin = false;
 let isCallTo = false;
 // let callBtn = document.querySelector('#callBtn');
-let localVideo = document.querySelector('#localVideo');
-let remoteVideo = document.querySelector('#remoteVideo');
+// let localVideo = document.querySelector('#localVideo');
+// let remoteVideo = document.querySelector('#remoteVideo');
 
 const socket = io.connect('http://192.168.1.103');
 console.log(socket)
@@ -55,12 +55,19 @@ socket.on('webrtcMsg', function (data) {
             console.log('recv candidate')
             handleCandidate(jsonData.candidate);
             break;
+        case 'refuse':
+            handlerRefuse();
+            break;
 
     }
 });
 
 let callTo = function (friendid) {
+
+    startCart(friendid);
+
     isCallTo = true;
+    audio.play();
 
     // 将自己的摄像头显示在屏幕上
     handleLogin(isLogin, function (isDone) {
@@ -120,7 +127,7 @@ let handleLogin = function (success, callback) {
             let configuration = {
                 // "iceServers": [{"url": "turn:112.74.57.118:3478", "username": "username1", "credential": "password1"}]
                 "iceServers": [
-                    {"url":'stun:stun.ekiga.net'}
+                    {"url": 'stun:stun.ekiga.net'}
                 ]
             };
 
@@ -187,12 +194,12 @@ let handleLogin = function (success, callback) {
 //when somebody sends us an offer
 let handleOffer = function (offer, name) {
 
-    if (!isCallTo){
+    if (!isCallTo) {
         audio.play();
-        layer.confirm('您的好友请求与您视频通话，是否接受', function(index){
+        layer.confirm('您的好友请求与您视频通话，是否接受', function (index) {
             audio.pause()
             layer.close(index);
-
+            startCart(name);
             handleLogin(isLogin, function (isDone) {
                 console.log("isDone" + isDone)
                 if (isDone) {
@@ -217,12 +224,29 @@ let handleOffer = function (offer, name) {
 
                 }
             })
+        }, function (index) {
+            layer.close(index)
+            send({
+                name: name,
+                type: "refuse"
+            });
         });
     }
 
-
-
 };
+
+let handlerRefuse = function () {
+    audio.pause();
+    var track = stream.getTracks()[0];  // if only one media track
+    track.stop();
+    $('#chatPanel').empty();
+    layer.alert('您的好友拒绝和您聊天。')
+    localVideo.src = null;
+    connectedUser = null;
+    yourConn.close();
+    yourConn.onicecandidate = null;
+    yourConn.onaddstream = null;
+}
 
 let handleAnswer = function (answer) {
     yourConn.setRemoteDescription(new RTCSessionDescription(answer));

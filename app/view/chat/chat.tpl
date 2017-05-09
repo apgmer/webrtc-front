@@ -34,7 +34,8 @@
                             {% for friend in friends %}
                                 <li class="u-list-group-item">
                                     <div class="friend">
-                                        <span style="font-size: 25px;">{{ friend.userinfo.name }}</span>
+                                        <span style="font-size: 25px;" id="{{ friend.userinfo.id }}">
+                                            {{ friend.userinfo.name }}</span>
 
                                         {% if friend.status == 'ONLINE' %}
                                             <span style="padding-top: 10px" class="u-right"> 在线
@@ -84,18 +85,9 @@
                     right: 28px;
                 }
             </style>
-            <div class="u-col-md-8">
-                <div class="u-panel">
-                    <div class="u-panel-heading">
-                        <p class="u-panel-title">与 郭晓天 聊天</p>
-                    </div>
-                    <div class="u-panel-body">
-                        <div class="videos">
-                            <video id="remoteVideo" class="remoteVideo" autoplay></video>
-                            <video id="localVideo" class="localVideo" autoplay style="max-height: 412px;"></video>
-                        </div>
-
-                    </div>
+            <div class="u-col-md-8" id="chatPanel">
+                <div style="padding-top: 50px">
+                    选择好友开始聊天
                 </div>
             </div>
         </div>
@@ -170,6 +162,22 @@
             }, 10000)
 
         })
+        var startCart = function (uid) {
+            $('#chatPanel').empty();
+            var name = $('#'+uid+'').text()
+            var ele = '<div class="u-panel">' +
+                '<div class="u-panel-heading">' +
+                '<p class="u-panel-title">与 '+name+' 聊天</p>' +
+                '</div>' +
+                '<div class="u-panel-body">' +
+                '<div class="videos">' +
+                '<video id="remoteVideo" class="remoteVideo" autoplay></video>' +
+                '<video id="localVideo" class="localVideo" autoplay style="max-height: 412px;"></video>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            $('#chatPanel').append(ele);
+        }
     </script>
     <script src="/public/socketio/socket.io-1.2.1.js"></script>
     <script src="/public/js/chat_stand.js"></script>

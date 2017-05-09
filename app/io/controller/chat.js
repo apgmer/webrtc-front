@@ -63,8 +63,19 @@ module.exports = () => {
                 }
                 break;
 
-            case 'leave':
+
+            case 'refuse':
                 let s3 = _sockets[data.name];
+                if(null !== s3){
+                    s3.emit('webrtcMsg',JSON.stringify({
+                        type: "refuse"
+                    }))
+                }
+                break;
+
+            // case 'leave':
+            //     let s3 = _sockets[data.name];
+            //     break;
 
 
         }
