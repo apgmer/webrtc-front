@@ -19,7 +19,8 @@ let isCallTo = false;
 // let localVideo = document.querySelector('#localVideo');
 // let remoteVideo = document.querySelector('#remoteVideo');
 
-const socket = io.connect('http://192.168.1.103');
+// const socket = io.connect('http://192.168.1.103');
+const socket = io.connect('http://192.168.1.103:7001');
 console.log(socket)
 socket.on('connect', function () {
 

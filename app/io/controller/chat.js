@@ -13,12 +13,19 @@ module.exports = () => {
         //
         const socket = this.socket;
         let data;
-        try{
-           data = JSON.parse(message);
-        }catch (e){
-            console.log("json error");
-            data = {};
+
+
+        if(typeof message !== "object"){
+            try{
+                data = JSON.parse(message);
+            }catch (e){
+                console.log("json error");
+                data = {};
+            }
+        }else{
+            data = message
         }
+
         switch (data.type){
             case 'login':
                 let d = {

@@ -16,7 +16,7 @@ let callBtn = document.querySelector('#callBtn');
 let localVideo = document.querySelector('#localVideo');
 let remoteVideo = document.querySelector('#remoteVideo');
 
-const socket = io.connect('http://192.168.1.103:7001');
+const socket = io.connect('http://127.0.0.1:7001');
 socket.on('connect',function () {
 
 });
